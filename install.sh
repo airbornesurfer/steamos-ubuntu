@@ -47,9 +47,9 @@ fi
 # Download the packages we need. If we fail at downloading, stop the script.
 set -e
 echo "Downloading SteamOS packages..."
-wget "http://repo.steamstatic.com/steamos/pool/main/s/steamos-compositor/steamos-compositor_${STEAMOS_COMPOSITOR_VER}.deb"
-wget "http://repo.steamstatic.com/steamos/pool/main/s/steamos-modeswitch-inhibitor/steamos-modeswitch-inhibitor_${STEAMOS_MODESWITCH_VER}.deb"
-wget "http://repo.steamstatic.com/steamos/pool/main/p/plymouth-themes-steamos/plymouth-themes-steamos_${STEAMOS_PLYMOUTH_VER}.deb"
+wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-compositor/steamos-compositor_${STEAMOS_COMPOSITOR_VER}.deb"
+wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-modeswitch-inhibitor/steamos-modeswitch-inhibitor_${STEAMOS_MODESWITCH_VER}.deb"
+wget "http://repo.steampowered.com/steamos/pool/main/p/plymouth-themes-steamos/plymouth-themes-steamos_${STEAMOS_PLYMOUTH_VER}.deb"
 set +e
 
 # See if there is a 'steam' user account. If not, create it.
@@ -93,7 +93,6 @@ if [[ "${INCLUDE_GPU_DRIVERS}" == "true" ]]; then
 			;;
 		amd)
 			echo "Installing the latest AMD drivers..."
-			add-apt-repository ppa:oibaf/graphics-drivers -y
 			apt update
 			apt dist-upgrade -y
 	
@@ -103,7 +102,6 @@ if [[ "${INCLUDE_GPU_DRIVERS}" == "true" ]]; then
 			;;
 		intel)
 			echo "Installing the latest mesa drivers..."
-			add-apt-repository ppa:paulo-miguel-dias/pkppa -y
 			apt update
 			apt dist-upgrade -y
 	
