@@ -46,10 +46,16 @@ fi
 
 # Download the packages we need. If we fail at downloading, stop the script.
 set -e
-echo "Downloading SteamOS packages..."
+echo "Downloading SteamOS 2.0 packages..."
 wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-compositor/steamos-compositor_${STEAMOS_COMPOSITOR_VER}.deb"
 wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-modeswitch-inhibitor/steamos-modeswitch-inhibitor_${STEAMOS_MODESWITCH_VER}.deb"
 wget "http://repo.steampowered.com/steamos/pool/main/p/plymouth-themes-steamos/plymouth-themes-steamos_${STEAMOS_PLYMOUTH_VER}.deb"
+echo "Adding Gamescope PPA..."
+add-apt-repository ppa:samoilov-lex/gamescope -y
+apt update
+echo "Installing Gamescope..."
+apt install gamescope
+echo "SteamOS 2.0 and 3.0 files installed!"
 set +e
 
 # See if there is a 'steam' user account. If not, create it.
@@ -187,6 +193,6 @@ echo "Configuring the default session..."
 cp ./conf/steam-session.conf "/var/lib/AccountsService/users/${STEAM_USER}"
 
 echo ""
-echo "Installation complete! Press ENTER to reboot or CTRL+C to exit"
+echo "Installation complete! Please run once as user steam: steam -steamos3 steampal -steamdeck -gamepadui"
 read -r
-reboot
+exit
