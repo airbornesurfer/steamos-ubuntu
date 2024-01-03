@@ -50,9 +50,6 @@ echo "Downloading SteamOS 2.0 packages..."
 wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-compositor/steamos-compositor_${STEAMOS_COMPOSITOR_VER}.deb"
 wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-modeswitch-inhibitor/steamos-modeswitch-inhibitor_${STEAMOS_MODESWITCH_VER}.deb"
 wget "http://repo.steampowered.com/steamos/pool/main/p/plymouth-themes-steamos/plymouth-themes-steamos_${STEAMOS_PLYMOUTH_VER}.deb"
-echo "Adding Gamescope PPA..."
-add-apt-repository ppa:samoilov-lex/gamescope
-apt update
 echo "Installing Gamescope..."
 apt install gamescope
 echo "SteamOS 2.0 and 3.0 files installed!"
@@ -129,22 +126,6 @@ echo "Installing steam..."
 apt update
 apt install steam steam-devices x11-utils
 
-# WIP - find a way to enable Steamplay without using Desktop Steam Client. Also maybe find a way to enable Steam Beta with latest Steamplay
-# Enable SteamPlay
-#echo "Enable Steamplay..."
-
-# Enable Protonfix for ease of use with certain games that needs tweaking.
-# https://github.com/simons-public/protonfixes
-# Installing Protonfix for ease of use
-if [[ "${INCLUDE_PROTONFIX}" == "true" ]]; then
-	apt install python-pip python3-pip
-	echo "Installing protonfix..."    
-	pip3 install protonfixes --upgrade
-	# Installing cefpython3 for visual progress bar
-	pip install cefpython3
-	# Edit Proton * user_settings.py
-fi
-
 # Install a terminal emulator that can be added from Big Picture Mode.
 if [[ "${INCLUDE_SAKURA}" == "true" ]]; then
 	echo "Installing the sakura terminal emulator..."
@@ -156,10 +137,6 @@ if [[ "${INCLUDE_OPENSSH}" == "true" ]]; then
 	echo "Installing OpenSSH Server..."
 	apt install openssh-server
 fi
-
-# Enable automatic login. We use 'envsubst' to replace the user with ${STEAM_USER}.
-echo "Enabling automatic login..."
-envsubst < ./conf/custom.conf > /etc/gdm3/custom.conf
 
 # Create our session switching scripts to allow rebooting to the desktop
 echo "Creating reboot to session scripts..."
