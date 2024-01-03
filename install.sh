@@ -51,7 +51,7 @@ wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-compositor/steamo
 wget "http://repo.steampowered.com/steamos/pool/main/s/steamos-modeswitch-inhibitor/steamos-modeswitch-inhibitor_${STEAMOS_MODESWITCH_VER}.deb"
 wget "http://repo.steampowered.com/steamos/pool/main/p/plymouth-themes-steamos/plymouth-themes-steamos_${STEAMOS_PLYMOUTH_VER}.deb"
 echo "Adding Gamescope PPA..."
-add-apt-repository ppa:samoilov-lex/gamescope -y
+add-apt-repository ppa:samoilov-lex/gamescope
 apt update
 echo "Installing Gamescope..."
 apt install gamescope
@@ -93,27 +93,27 @@ if [[ "${INCLUDE_GPU_DRIVERS}" == "true" ]]; then
 	case "${GPU_TYPE}" in
 		nvidia)
 			echo "Installing the latest Nvidia drivers..."
-			add-apt-repository ppa:graphics-drivers/ppa -y
+			add-apt-repository ppa:graphics-drivers/ppa
 			apt update
-			apt install nvidia-driver-415 -y
+			apt install nvidia-driver-415
 			;;
 		amd)
 			echo "Installing the latest AMD drivers..."
 			apt update
-			apt dist-upgrade -y
+			apt dist-upgrade
 	
 			dpkg --add-architecture i386
 			apt update
-			apt install mesa-vulkan-drivers mesa-vulkan-drivers:i386 -y
+			apt install mesa-vulkan-drivers mesa-vulkan-drivers:i386
 			;;
 		intel)
 			echo "Installing the latest mesa drivers..."
 			apt update
-			apt dist-upgrade -y
+			apt dist-upgrade
 	
 			dpkg --add-architecture i386
 			apt update
-			apt install mesa-vulkan-drivers mesa-vulkan-drivers:i386 -y
+			apt install mesa-vulkan-drivers mesa-vulkan-drivers:i386
 			;;
 		none)
 			echo "GPU not detected."
@@ -127,7 +127,7 @@ fi
 # Install steam and steam device support.
 echo "Installing steam..."
 apt update
-apt install steam steam-devices x11-utils -y
+apt install steam steam-devices x11-utils
 
 # WIP - find a way to enable Steamplay without using Desktop Steam Client. Also maybe find a way to enable Steam Beta with latest Steamplay
 # Enable SteamPlay
@@ -137,7 +137,7 @@ apt install steam steam-devices x11-utils -y
 # https://github.com/simons-public/protonfixes
 # Installing Protonfix for ease of use
 if [[ "${INCLUDE_PROTONFIX}" == "true" ]]; then
-	apt install python-pip python3-pip -y
+	apt install python-pip python3-pip
 	echo "Installing protonfix..."    
 	pip3 install protonfixes --upgrade
 	# Installing cefpython3 for visual progress bar
@@ -148,13 +148,13 @@ fi
 # Install a terminal emulator that can be added from Big Picture Mode.
 if [[ "${INCLUDE_SAKURA}" == "true" ]]; then
 	echo "Installing the sakura terminal emulator..."
-	apt install sakura -y
+	apt install sakura
 fi
 
 # Install openssh-server for remote administration
 if [[ "${INCLUDE_OPENSSH}" == "true" ]]; then
 	echo "Installing OpenSSH Server..."
-	apt install openssh-server -y
+	apt install openssh-server
 fi
 
 # Enable automatic login. We use 'envsubst' to replace the user with ${STEAM_USER}.
@@ -180,7 +180,7 @@ chmod 440 /etc/sudoers.d/steamos-reboot
 # Install the steamos compositor, modeswitch, and themes
 echo "Configuring the SteamOS boot themes..."
 dpkg -i ./*.deb &>/dev/null
-apt install -f -y
+apt install -f
 update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/steamos/steamos.plymouth 100
 update-alternatives --set default.plymouth /usr/share/plymouth/themes/steamos/steamos.plymouth
 
